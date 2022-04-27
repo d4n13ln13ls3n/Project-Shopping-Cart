@@ -2,8 +2,7 @@ const getSavedCartItems = () => {
   const savedItems = localStorage.getItem('cartItems');
   try {
     return JSON.parse(savedItems);
-  }
-  catch {
+  } catch (error) {
     return [];
   }
 };

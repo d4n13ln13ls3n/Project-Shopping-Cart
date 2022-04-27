@@ -101,7 +101,7 @@ function cartItemClickListener(event) {
   cartItems.removeChild(event.target);
 }
 
-function createCartItemElement({ sku, name, salePrice }) { // sends item to shopping cart?
+function createCartItemElement({ sku, name, salePrice }) { // sends item to shopping cart
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -110,8 +110,12 @@ function createCartItemElement({ sku, name, salePrice }) { // sends item to shop
 }
 
 function addProductToCart(itemRetrieved) {
-  const cartItem = createCartItemElement({ sku: itemRetrieved.id, name: itemRetrieved.title, salePrice: itemRetrieved.price });
-  cartItems.appendChild(cartItem);
+  const cartItem = createCartItemElement({ 
+    sku: itemRetrieved.id, 
+    name: itemRetrieved.title, 
+    salePrice: itemRetrieved.price });
+  cartItems.appendChild(cartItem); // cartItems is the object created in localStorage using JSON.stringify
+  console.log(cartItems);
 }
 
 async function addProductCartFromAPI(productId) {
@@ -137,5 +141,10 @@ async function insertProductItemElementsFromAPI() { // written by me
   return itemsSection;
 }
 insertProductItemElementsFromAPI();
+
+async function calculatePrice() {
+  const priceContainer = document.querySelector('.priceContainer');
+  // add itemretrieved.price
+}
 
 window.onload = () => { };
