@@ -2,67 +2,7 @@
 const itemsSection = document.querySelector('.items'); // inserted by me
 const cartItems = document.querySelector('.cart__items');
 const priceContainer = document.querySelector('.total-price');
-
-// FALTA ACIONAR A FUNÇÃO E COLOCAR O VALOR LÁ DENTRO
-// load the data
-// render the cart items based on that data
-
-// let state = {
-//   tasks: [],
-//   selectedTaskIndex: -1,
-// };
-
-// function updateState(key, updatedValue) {
-//   state[key] = updatedValue;
-//   renderTasks(state);
-// }
-
-// synchs HTML(UI) and state
-// function renderTasks(state) {
-//   const taskListElement = document.querySelector('ol');
-//   taskListElement.innerHTML = '';
-  
-  // state.tasks.forEach((task, index) => {
-    // task represents the state
-//     const taskElement = createTaskElement(task, index);
-//     taskListElement.appendChild(taskElement);
-//   });
-// }
-
-// function clearAll() {
-//   updateState("tasks", []);
-// }
-// clearButton.addEventListener('click', clearAll);
-
-// function saveTasks() {
-//   localStorage.setItem('currentState', JSON.stringify(state));
-// }
-// saveButton.addEventListener('click', saveTasks);
-
-// function removeSelectedTask() {
-//   const unselectedTasks = [];
-  
-//   state.tasks.forEach((task, index) => {
-//     if (index !== state.selectedTaskIndex) {
-//       unselectedTasks.push(task);
-//     }
-//   });
-  
-//   updateState("tasks", unselectedTasks);
-//   updateState("selectedTaskIndex", -1);
-// }
-// buttonRemoveSelected.addEventListener('click', removeSelectedTask);
-
-// function initialize() {
-//   const savedState = localStorage.getItem('currentState');
-  
-//   if (savedState !== null) {
-//     state = JSON.parse(savedState);
-//   }
-  
-//   renderTasks(state);
-// }
-// initialize();
+const emptyCartButton = document.querySelector('.empty-cart');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -79,11 +19,6 @@ function createCustomElement(element, className, innerText) {
 }
 
 function createProductItemElement({ sku, name, image }) {
-  // createProductItemElement({
-//   sku: product.id,
-//   name: product.name,
-//   thumbnail: product.image
-//  }) CALL IT LIKE THIS
   // sku refers to the key 'id' returned by the API
   const section = document.createElement('section'); // creates a new section
   section.className = 'item'; // assigns the class 'item' to that section
@@ -114,12 +49,21 @@ function calculatePrice() {
 
 function cartItemClickListener(event) {
   const currentCart = getSavedCartItems();
+  // const removedId = getSkuFromProductItem(event.target);
   const removedIndex = Array.from(cartItems.children).indexOf(event.target); // gets the removed element index, must be called before removeChild to get the accurate number before cartItems is modified
   cartItems.removeChild(event.target);
   currentCart.splice(removedIndex, 1);
+  // const updatedItems = currentCart.filter((item) => item.id !== removedId);
   saveCartItems(currentCart);
   calculatePrice();
 }
+
+function clearCart() {
+  cartItems.innerHTML = '';
+  saveCartItems([]);
+  calculatePrice();
+}
+emptyCartButton.addEventListener('click', clearCart);
 
 function createCartItemElement({ sku, name, salePrice }) { // sends item to shopping cart
   const li = document.createElement('li');
