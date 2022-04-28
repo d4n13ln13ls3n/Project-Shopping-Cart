@@ -1,7 +1,7 @@
 // linha 1
 const itemsSection = document.querySelector('.items'); // inserted by me
 const cartItems = document.querySelector('.cart__items');
-const priceContainer = document.querySelector('.price-container');
+const priceContainer = document.querySelector('.total-price');
 
 // FALTA ACIONAR A FUNÇÃO E COLOCAR O VALOR LÁ DENTRO
 // load the data
@@ -109,8 +109,7 @@ function calculatePrice() {
     totalPrice += item.price;
   });
   console.log('total price:', totalPrice);
-  priceContainer.innerText = totalPrice.toFixed(2);
-  return totalPrice;
+  priceContainer.innerText = totalPrice;
 }
 
 function cartItemClickListener(event) {
