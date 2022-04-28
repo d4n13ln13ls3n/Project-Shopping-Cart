@@ -1,6 +1,10 @@
+// linha 1
 const itemsSection = document.querySelector('.items'); // inserted by me
 const cartItems = document.querySelector('.cart__items');
-const cartProducts = getSavedCartItems();
+
+// FALTA ACIONAR A FUNÇÃO E COLOCAR O VALOR LÁ DENTRO
+// load the data
+// render the cart items based on that data
 
 // let state = {
 //   tasks: [],
@@ -109,18 +113,23 @@ function createCartItemElement({ sku, name, salePrice }) { // sends item to shop
   return li;
 }
 
-function addProductToCart(itemRetrieved) {
+function addProductToCart(itemRetrieved) { // completed function
   const cartItem = createCartItemElement({ 
     sku: itemRetrieved.id, 
     name: itemRetrieved.title, 
     salePrice: itemRetrieved.price });
   cartItems.appendChild(cartItem); // cartItems is the object created in localStorage using JSON.stringify
   console.log(cartItems);
+  // - Push to that same array ???
+  // createCartItemElement(cartItem); // render the new item on the cart?
+  // savedItems.push(cartItem); // - Save again the whole array ???
 }
+// addProductToCart(itemRetrieved); // uncommented 28/4 8h09
 
 async function addProductCartFromAPI(productId) {
   const itemRetrieved = await fetchItem(productId);
   addProductToCart(itemRetrieved);
+  saveCartItems(itemRetrieved); 
 }
 async function insertProductItemElementsFromAPI() { // written by me
   const products = await fetchProducts();
@@ -144,7 +153,14 @@ insertProductItemElementsFromAPI();
 
 async function calculatePrice() {
   const priceContainer = document.querySelector('.priceContainer');
-  // add itemretrieved.price
+  // add cartItems.itemretrieved.price
 }
 
+function renderSavedItems() {
+  const itemsToRender = getSavedCartItems(); 
+  itemsToRender.forEach((item) => {
+    addProductToCart(item);
+    }); 
+}
+renderSavedItems();
 window.onload = () => { };
