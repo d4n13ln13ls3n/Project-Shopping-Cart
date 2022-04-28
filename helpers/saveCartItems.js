@@ -1,8 +1,6 @@
 // line 1
-const saveCartItems = (newItemToSave) => {
-  console.log('testing');
-  const savedItems = getSavedCartItems();
-  localStorage.setItem('cartItems', JSON.stringify([...savedItems, newItemToSave]));
+const saveCartItems = (newArrayToSave) => {
+  localStorage.setItem('cartItems', JSON.stringify(newArrayToSave));
 };
 
 if (typeof module !== 'undefined') {
