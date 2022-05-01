@@ -147,3 +147,11 @@ body {
   border: 2px solid rgb(5, 52, 219);
   background-color: rgb(249, 249, 246);
 }
+
+.loading {
+  width: 196px;
+  height: 318px;
+  color: red;
+  font-size: 500pt;
+  position: fixed;
+}

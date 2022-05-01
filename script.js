@@ -4,6 +4,21 @@ const cartItems = document.querySelector('.cart__items');
 const priceContainer = document.querySelector('.total-price');
 const emptyCartButton = document.querySelector('.empty-cart');
 
+console.log('fetchProducts(computador):', fetchProducts('computador'));
+// console.log('computadorSearch:', computadorSearch);
+// console.log('computadorSearch.results:', computadorSearch.results);
+
+const fetchProducts2 = async (item) => {
+  const endpoint = `https://api.mercadolibre.com/sites/MLB/search?q=${item}`;
+  try {
+  const promiseFetch = await fetch(endpoint);
+  const data = await promiseFetch.json();
+  return data.results;
+  } catch (error) {
+    return error;
+  }
+};
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -16,6 +31,19 @@ function createCustomElement(element, className, innerText) {
   e.className = className;
   e.innerText = innerText;
   return e;
+}
+
+function loading() {
+  itemsSection.style.display = 'none';
+  itemsSection.appendChild(createCustomElement('div', 'loading', 'Carregando...'));
+}
+
+function removeLoading() {
+  const loadingElement = document.querySelector('.loading');
+  if (loadingElement) {
+  itemsSection.removeChild(loadingElement);
+  itemsSection.style.display = 'flex';  
+  }
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -33,9 +61,9 @@ function createProductItemElement({ sku, name, image }) {
 
 // criar função que pegue a requisição da API e inclua os elementos desejados dentro do card gerado pela função createProductItemElement
 
-function getSkuFromProductItem(item) { // sku se referem aos campos 'id' retornados pela API
-  return item.querySelector('span.item__sku').innerText; // selects the id of the span passed as an argument
-}
+// function getSkuFromProductItem(item) { // sku se referem aos campos 'id' retornados pela API
+//   return item.querySelector('span.item__sku').innerText; // selects the id of the span passed as an argument
+// }
 
 function calculatePrice() {
   const savedItems = getSavedCartItems();
@@ -78,22 +106,22 @@ function addProductToCart(itemRetrieved) { // completed function
     sku: itemRetrieved.id, 
     name: itemRetrieved.title, 
     salePrice: itemRetrieved.price });
-  cartItems.appendChild(cartItem); // cartItems is the object created in localStorage using JSON.stringify
-  // - Push to that same array ???
-  // createCartItemElement(cartItem); // render the new item on the cart?
-  // savedItems.push(cartItem); // - Save again the whole array ???
+  cartItems.appendChild(cartItem); 
 }
-// addProductToCart(itemRetrieved); // uncommented 28/4 8h09
 
 async function addProductCartFromAPI(productId) { // fetches the product to be added on the cart
+  loading();
   const itemRetrieved = await fetchItem(productId);
+  removeLoading();
   addProductToCart(itemRetrieved); // render the new product on the page
   const currentCart = getSavedCartItems();
   saveCartItems([...currentCart, itemRetrieved]);
   calculatePrice();
 }
 async function insertProductItemElementsFromAPI() { // written by me
-  const products = await fetchProducts();
+  loading();
+  const products = await fetchProducts2('computador');
+  removeLoading(); 
   // There is one array with 50 objects inside. I have to iterate through each object and call the function createProduct 50 times using the keys sky, name and image as parameters
   products.forEach((product) => {
     const productElement = createProductItemElement({ 

@@ -1,9 +1,15 @@
-const endpoint = 'https://api.mercadolibre.com/sites/MLB/search?q=$QUERY';
-
-const fetchProducts = async () => {
+// line 1
+const fetchProducts = async (item) => {
+  const endpoint = `https://api.mercadolibre.com/sites/MLB/search?q=${item}`;
+  try {
   const promiseFetch = await fetch(endpoint);
   const data = await promiseFetch.json();
-  return data.results;
+  console.log('data.results:', data.results);
+  console.log('data:', data);
+  return data; // it was data.results before
+  } catch (error) {
+    return error;
+  }
 };
 
 if (typeof module !== 'undefined') {
@@ -11,3 +17,9 @@ if (typeof module !== 'undefined') {
     fetchProducts,
   };
 }
+// ORIGINAL FUNCTION
+// const fetchProducts = async () => {
+//   const promiseFetch = await fetch(endpoint);
+//   const data = await promiseFetch.json();
+//   return data.results;
+// };
