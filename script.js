@@ -142,6 +142,7 @@ insertProductItemElementsFromAPI();
 
 function renderSavedItems() {
   const itemsToRender = getSavedCartItems(); 
+  console.log('items to render:', itemsToRender[0]);
   itemsToRender.forEach((item) => {
     addProductToCart(item);
     }); 
