@@ -1,3 +1,5 @@
+![Captura de tela de 2022-11-05 18-36-59](https://user-images.githubusercontent.com/92753791/200142225-dedb4678-a613-4b39-a63d-536b087f8f31.png)
+
 ## Project Shopping Cart
   Projeto desenvolvido no módulo de Front-end da [Trybe](https://www.betrybe.com/).
   English below
