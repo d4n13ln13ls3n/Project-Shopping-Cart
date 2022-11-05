@@ -1,4 +1,4 @@
-## - Project Shopping Cart
+## Project Shopping Cart
   Projeto desenvolvido no módulo de Front-end da [Trybe](https://www.betrybe.com/).
   English below
   
