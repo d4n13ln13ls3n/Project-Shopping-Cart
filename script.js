@@ -1,4 +1,5 @@
 // linha 1
+
 const itemsSection = document.querySelector('.items'); // inserted by me
 const cartItems = document.querySelector('.cart__items');
 const priceContainer = document.querySelector('.total-price');
@@ -33,16 +34,16 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function loading() {
-  itemsSection.style.display = 'none';
-  itemsSection.appendChild(createCustomElement('div', 'loading', 'Carregando...'));
+function loading(parentElement) {
+  parentElement.setAttribute('display', 'none');
+  parentElement.appendChild(createCustomElement('div', 'loading', 'Carregando...'));
 }
 
-function removeLoading() {
+function removeLoading(parentElement) {
   const loadingElement = document.querySelector('.loading');
   if (loadingElement) {
-  itemsSection.removeChild(loadingElement);
-  itemsSection.style.display = 'flex';  
+  parentElement.removeChild(loadingElement);
+  parentElement.setAttribute('display', '');  
   }
 }
 
@@ -72,7 +73,7 @@ function calculatePrice() {
     totalPrice += item.price;
   });
   console.log('total price:', totalPrice);
-  priceContainer.innerText = totalPrice;
+  priceContainer.innerText = `Subtotal: R$ ${totalPrice.toFixed(2)}`;
 }
 
 function cartItemClickListener(event) {
@@ -93,35 +94,41 @@ function clearCart() {
 }
 emptyCartButton.addEventListener('click', clearCart);
 
-function createCartItemElement({ sku, name, salePrice }) { // sends item to shopping cart
+function createCartItemElement({ sku, name, salePrice, image }) { // sends item to shopping cart
   const li = document.createElement('li');
+  const div = document.createElement('div');
+  cartItems.appendChild(li);
+  li.appendChild(createProductImageElement(image));
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.appendChild(div);
+  div.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
 
 function addProductToCart(itemRetrieved) { // completed function
   const cartItem = createCartItemElement({ 
+    image: itemRetrieved.thumbnail,
     sku: itemRetrieved.id, 
     name: itemRetrieved.title, 
-    salePrice: itemRetrieved.price });
+    salePrice: itemRetrieved.price,
+    });
   cartItems.appendChild(cartItem); 
 }
 
 async function addProductCartFromAPI(productId) { // fetches the product to be added on the cart
-  loading();
+  loading(cartItems);
   const itemRetrieved = await fetchItem(productId);
-  removeLoading();
+  removeLoading(cartItems);
   addProductToCart(itemRetrieved); // render the new product on the page
   const currentCart = getSavedCartItems();
   saveCartItems([...currentCart, itemRetrieved]);
   calculatePrice();
 }
 async function insertProductItemElementsFromAPI() { // written by me
-  loading();
+  loading(itemsSection);
   const products = await fetchProducts2('computador');
-  removeLoading(); 
+  removeLoading(itemsSection); 
   // There is one array with 50 objects inside. I have to iterate through each object and call the function createProduct 50 times using the keys sky, name and image as parameters
   products.forEach((product) => {
     const productElement = createProductItemElement({ 

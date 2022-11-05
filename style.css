@@ -6,7 +6,7 @@
 }
 
 body {
-  background-color: rgb(246, 246, 246);
+  background-color: #0A764F;
 }
 
 .header {
@@ -22,6 +22,9 @@ body {
   width: 80%;
 }
 
+.container {
+  background-color:  white;
+}
 .title {
   color: rgb(221, 221, 221);
   font-size: 30px;
@@ -97,7 +100,7 @@ body {
   height: auto;
   margin: 5px;
   width: 200px;
-  border: 2px solid rgb(234, 234, 233);
+  border: 2px solid #0A764F;
   border-radius: 5px;
   box-sizing: border-box;
 }
@@ -112,6 +115,7 @@ body {
   flex-grow: 1;
   padding: 10px;
   text-align: center;
+  font-family: 'Tapestry', cursive;}
 }
 
 .item .item__image {
@@ -119,19 +123,20 @@ body {
 }
 
 .item .item__add {
-  background-color: rgb(5, 52, 219);
   border: 0;
   cursor: pointer;
   margin: 0;
   padding: 10px;
   color: white;
+  background-color: #0A764F;
+  font-weight: 900;
 }
 
 .cart {
   display: flex;
   flex-basis: 32%;
   flex-flow: column wrap;
-  background-color: rgb(241, 241, 238);
+  background-color: #f2f2f2;
   height: 100vh;
 }
 
@@ -144,14 +149,52 @@ body {
   width: 170px;
   height: 35px;
   margin: 0 auto;
-  border: 2px solid rgb(5, 52, 219);
-  background-color: rgb(249, 249, 246);
+  background-color: #0A764F;
+  color: white;
+  font-weight: 900;
 }
 
 .loading {
-  width: 196px;
-  height: 318px;
-  color: red;
-  font-size: 500pt;
+  width: 55px;
+  height: 50px;
+  color: darkgray;
+  font-size: 50pt;
   position: fixed;
+}
+
+.cart__item div {
+  margin-left: 100px;
+  margin-top: -80px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 5px lightslategray;
+  font-size: 18px;
+  font-family: 'Tapestry', cursive;
+}
+
+.cart__item img {
+  border-radius: 30px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  mix-blend-mode: multiply;
+}
+
+.total-price {
+  font-size: 20px;
+  font-family: 'Tapestry', cursive;
+  font-weight: 600;
+  padding-top: 10px;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.price-container {
+  list-style-type: none;
+}
+
+.item__add:hover, .empty-cart:hover {
+  background-color: #03343D;
+}
+
+.item__title:hover, .item__image:hover {
+  background-color:  #ccffcc;
 }
